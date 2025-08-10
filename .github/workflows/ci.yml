@@ -24,3 +24,6 @@ jobs:
 
       - name: Run Hardhat tests
         run: npx hardhat test
+
+      - name: Run Hardhat coverage
+        run: npx hardhat coverage
