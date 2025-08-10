@@ -133,4 +133,10 @@ describe("CCNCarnival2025", function () {
     const payers = await ccn.getPayers(1);
     expect(payers).to.include(buyer.address);
   });
+
+  it("Returns correct withdrawal times for all durations", async () => {
+    expect(await ccn.getWithdrawalTime(0)).to.equal(24 * 60 * 60);
+    expect(await ccn.getWithdrawalTime(1)).to.equal(2 * 24 * 60 * 60);
+    expect(await ccn.getWithdrawalTime(2)).to.equal(3 * 24 * 60 * 60);
+  });
 });
