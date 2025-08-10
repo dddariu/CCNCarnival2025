@@ -2,10 +2,10 @@ const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
 describe("CCNCarnival2025", function () {
-  let CCN, ccn, owner, buyer;
+  let CCN, ccn, owner, buyer, other;
 
   beforeEach(async () => {
-    [owner, buyer] = await ethers.getSigners();
+    [owner, buyer, other] = await ethers.getSigners();
     CCN = await ethers.getContractFactory("CCNCarnival2025");
     ccn = await CCN.deploy();
     await ccn.waitForDeployment();
@@ -55,18 +55,22 @@ describe("CCNCarnival2025", function () {
   });
 
   it("Reject non-owner issuing refund", async () => {
+    await ccn.registerStall(0);
+    await ccn.connect(buyer).makePayment(1, { value: ethers.parseEther("1") });
+
     await expect(ccn.connect(buyer).issueRefund(1, buyer.address))
       .to.be.revertedWith("Not stall owner");
   });
 
   it("Reject refund if no payment", async () => {
+    await ccn.registerStall(0);
     await expect(ccn.issueRefund(1, other.address))
       .to.be.revertedWith("No payment to refund");
   });
 
   it("Reject refund request if no payment", async () => {
-    await expect(ccn.connect(other).requestRefund(1)).to.be.revertedWith(
-      "No payment made"
-    );
+    await ccn.registerStall(0);
+    await expect(ccn.connect(other).requestRefund(1))
+      .to.be.revertedWith("No payment made");
   });
 });
