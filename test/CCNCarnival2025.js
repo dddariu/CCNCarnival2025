@@ -8,7 +8,6 @@ describe("CCNCarnival2025", function () {
     [owner, buyer] = await ethers.getSigners();
     CCN = await ethers.getContractFactory("CCNCarnival2025");
     ccn = await CCN.deploy();
-    await ccn.deployed();
   });
 
   it("Registers a stall", async () => {
@@ -23,4 +22,5 @@ describe("CCNCarnival2025", function () {
     const stall = await ccn.stalls(1);
     expect(stall.balance).to.equal(ethers.utils.parseEther("1"));
   });
+
 });
