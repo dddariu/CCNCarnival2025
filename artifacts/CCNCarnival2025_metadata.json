@@ -397,11 +397,11 @@
 	},
 	"sources": {
 		"contracts/CCNCarnival2025.sol": {
-			"keccak256": "0x7dffb70652ad0341a7a015a5bed9bea88b6ba08b0abcaa6cd0b21c84f8f38d0f",
+			"keccak256": "0xaff374ef2afaa1554bf6843ebe4951f382eed18def8150720c55113342235417",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f86d3f095b76e98519a956e0c5e2619a065eaa478fa11d11803614e4c686db1c",
-				"dweb:/ipfs/QmeFMXFnLvQg6yMrTKiQ7uwQMfJdcUcSkBhwyYZqrASy7s"
+				"bzz-raw://69facca3303b510dd167f728202bec91ee7e8fe8c526b1265e16cb3cae9d3758",
+				"dweb:/ipfs/Qmbcw5e3FSEHwDBaG4sFLhZnhpujCWu9vRceFhL5MD5w19"
 			]
 		}
 	},

@@ -13,6 +13,7 @@ contract CCNCarnival2025 {
         bool withdrawn;
     }
 
+
     mapping(uint => Stall) public stalls;
     mapping(uint => mapping(address => uint256)) public payments;
 
