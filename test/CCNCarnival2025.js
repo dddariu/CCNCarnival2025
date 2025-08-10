@@ -53,4 +53,20 @@ describe("CCNCarnival2025", function () {
     expect(stall.balance).to.equal(0);
     expect(stall.withdrawn).to.equal(true);
   });
+
+  it("Reject non-owner issuing refund", async () => {
+    await expect(ccn.connect(buyer).issueRefund(1, buyer.address))
+      .to.be.revertedWith("Not stall owner");
+  });
+
+  it("Reject refund if no payment", async () => {
+    await expect(ccn.issueRefund(1, other.address))
+      .to.be.revertedWith("No payment to refund");
+  });
+
+  it("Reject refund request if no payment", async () => {
+    await expect(ccn.connect(other).requestRefund(1)).to.be.revertedWith(
+      "No payment made"
+    );
+  });
 });

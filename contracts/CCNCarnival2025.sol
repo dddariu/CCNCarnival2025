@@ -13,7 +13,6 @@ contract CCNCarnival2025 {
         bool withdrawn;
     }
 
-
     mapping(uint => Stall) public stalls;
     mapping(uint => mapping(address => uint256)) public payments;
 
@@ -106,8 +105,6 @@ contract CCNCarnival2025 {
         require(!refundRequested[_stallId][msg.sender], "Refund already requested");
         
         refundRequested[_stallId][msg.sender] = true;
-        // Optionally emit event:
-        // emit RefundRequested(_stallId, msg.sender);
     }
 
     function approveRefund(uint _stallId, address _buyer) external stallExists(_stallId) {
@@ -119,7 +116,6 @@ contract CCNCarnival2025 {
         require(amount > 0, "No payment to refund");
         require(amount <= s.balance, "Refund exceeds stall balance");
 
-        // Clear refund request
         refundRequested[_stallId][_buyer] = false;
 
         s.balance -= amount;
@@ -141,7 +137,6 @@ contract CCNCarnival2025 {
 
         refundRequested[_stallId][_buyer] = false;
 
-        // Emit event so frontends or logs can track denial
         emit RefundDenied(_stallId, _buyer);
     }
 }
