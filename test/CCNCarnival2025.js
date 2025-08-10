@@ -4,10 +4,10 @@ describe("CCNCarnival2025", function () {
   let CCN, ccn, owner, buyer;
 
   beforeEach(async () => {
-    [owner, buyer] = await ethers.getSigners();
-    CCN = await ethers.getContractFactory("CCNCarnival2025");
-    ccn = await CCN.deploy();
-    await ccn.deployed();
+    const [owner, buyer] = await ethers.getSigners();
+    const CCN = await ethers.getContractFactory("CCNCarnival2025");
+    const ccn = await CCN.deploy();
+    await ccn.deployed();;
   });
 
   it("Registers a stall", async () => {
