@@ -78,7 +78,7 @@ contract CCNCarnival2025 {
         Stall storage s = stalls[_stallId];
         require(msg.sender == s.owner, "Not stall owner");
         require(!s.withdrawn, "Already withdrawn");
-        //require(block.timestamp >= getWithdrawalTime(s.duration), "Too early");
+        require(block.timestamp >= getWithdrawalTime(s.duration), "Too early"); //remove for testing
 
         uint amount = s.balance;
         s.withdrawn = true;
