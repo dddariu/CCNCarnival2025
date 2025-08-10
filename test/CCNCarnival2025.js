@@ -73,4 +73,64 @@ describe("CCNCarnival2025", function () {
     await expect(ccn.connect(other).requestRefund(1))
       .to.be.revertedWith("No payment made");
   });
+
+  it("Owner can approve a refund request", async () => {
+    await ccn.registerStall(0);
+    await ccn.connect(buyer).makePayment(1, { value: ethers.parseEther("1") });
+    await ccn.connect(buyer).requestRefund(1);
+
+    await expect(ccn.approveRefund(1, buyer.address))
+      .to.emit(ccn, "RefundIssued")
+      .withArgs(1, buyer.address, ethers.parseEther("1"));
+
+    expect(await ccn.payments(1, buyer.address)).to.equal(0);
+  });
+
+  it("Rejects approveRefund if no request", async () => {
+    await ccn.registerStall(0);
+    await ccn.connect(buyer).makePayment(1, { value: ethers.parseEther("1") });
+    await expect(ccn.approveRefund(1, buyer.address))
+      .to.be.revertedWith("No refund requested");
+  });
+
+  it("Rejects approveRefund if not owner", async () => {
+    await ccn.registerStall(0);
+    await ccn.connect(buyer).makePayment(1, { value: ethers.parseEther("1") });
+    await ccn.connect(buyer).requestRefund(1);
+    await expect(ccn.connect(buyer).approveRefund(1, buyer.address))
+      .to.be.revertedWith("Not stall owner");
+  });
+
+  it("Owner can deny refund request", async () => {
+    await ccn.registerStall(0);
+    await ccn.connect(buyer).makePayment(1, { value: ethers.parseEther("1") });
+    await ccn.connect(buyer).requestRefund(1);
+
+    await expect(ccn.denyRefund(1, buyer.address))
+      .to.emit(ccn, "RefundDenied")
+      .withArgs(1, buyer.address);
+
+    expect(await ccn.refundRequested(1, buyer.address)).to.equal(false);
+  });
+
+  it("Rejects denyRefund if no request", async () => {
+    await ccn.registerStall(0);
+    await expect(ccn.denyRefund(1, buyer.address))
+      .to.be.revertedWith("No refund requested");
+  });
+
+  it("Rejects denyRefund if not owner", async () => {
+    await ccn.registerStall(0);
+    await ccn.connect(buyer).makePayment(1, { value: ethers.parseEther("1") });
+    await ccn.connect(buyer).requestRefund(1);
+    await expect(ccn.connect(buyer).denyRefund(1, buyer.address))
+      .to.be.revertedWith("Not stall owner");
+  });
+
+  it("Returns list of payers for a stall", async () => {
+    await ccn.registerStall(0);
+    await ccn.connect(buyer).makePayment(1, { value: ethers.parseEther("1") });
+    const payers = await ccn.getPayers(1);
+    expect(payers).to.include(buyer.address);
+  });
 });
