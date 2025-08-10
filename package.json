@@ -1,0 +1,11 @@
+{
+  "name": "ccncarnival2025",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "hardhat": "^2.19.0"
+  },
+  "scripts": {
+    "test": "npx hardhat test"
+  }
+}
