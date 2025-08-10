@@ -8,6 +8,7 @@ describe("CCNCarnival2025", function () {
     [owner, buyer] = await ethers.getSigners();
     CCN = await ethers.getContractFactory("CCNCarnival2025");
     ccn = await CCN.deploy();
+    await ccn.waitForDeployment();
   });
 
   it("Registers a stall", async () => {
@@ -18,9 +19,8 @@ describe("CCNCarnival2025", function () {
 
   it("Accepts a payment", async () => {
     await ccn.registerStall(0);
-    await ccn.connect(buyer).makePayment(1, { value: ethers.utils.parseEther("1") });
+    await ccn.connect(buyer).makePayment(1, { value: ethers.parseEther("1") });
     const stall = await ccn.stalls(1);
-    expect(stall.balance).to.equal(ethers.utils.parseEther("1"));
+    expect(stall.balance).to.equal(ethers.parseEther("1"));
   });
-
 });
