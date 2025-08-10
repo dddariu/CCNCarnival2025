@@ -8,7 +8,7 @@ describe("CCNCarnival2025", function () {
     [owner, buyer] = await ethers.getSigners();
     CCN = await ethers.getContractFactory("CCNCarnival2025");
     ccn = await CCN.deploy();
-    await ccn.deployed();   // make sure this is awaited on the instance
+    await ccn.deployed();
   });
 
   it("Registers a stall", async () => {
