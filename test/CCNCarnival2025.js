@@ -1,4 +1,5 @@
 const { expect } = require("chai");
+const { ethers } = require("hardhat");
 
 describe("CCNCarnival2025", function () {
   let CCN, ccn, owner, buyer;
