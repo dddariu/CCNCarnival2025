@@ -90,6 +90,7 @@ contract CCNCarnival2025 {
         emit FundsWithdrawn(_stallId, s.owner, amount);
     }
 
+
     function getWithdrawalTime(OperatingDays duration) public pure returns (uint) {
         if (duration == OperatingDays.Friday) return 1 days;
         if (duration == OperatingDays.FriSat) return 2 days;
